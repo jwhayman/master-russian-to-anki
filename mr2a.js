@@ -29,7 +29,7 @@ var mr2a = {
 			if (mr2a.cellCount == 5) {
 				var word = {
 					'audio': mr2a.processAudio(cells[1]),
-					'russian': mr2a.processCell(cells[2]).toUpperCase(),
+					'russian': mr2a.processCell(cells[2]),
 					'translation': mr2a.processCell(cells[3]),
 					'speech': mr2a.processCell(cells[4])
 				}
