@@ -1,4 +1,4 @@
 master-russian-to-anki
 ======================
 
-Converts masterrussian.com wordlists to csv
+Chrome content script to convert an html wordlist to csv format for use in anki

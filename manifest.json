@@ -1,0 +1,19 @@
+{
+	"manifest_version": 2,
+	
+	"name": "Master Russian Wordlists to CSV",
+	"description": "Chrome content script to convert masterrussian.com wordlists to csv format for use in anki",
+	"version": "1.0",
+	
+	"permissions": [
+		"http://masterrussian.com/"
+	],
+	
+	"content_scripts": [
+		{
+			"matches": ["http://masterrussian.com/*"],
+			"css": ["mr2a.css"],
+			"js": ["jquery.js", "mr2a.js"]
+		}
+	]
+}

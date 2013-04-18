@@ -1,0 +1,7 @@
+.mr2a-container {
+	height: 250px;
+	width: 465px;
+	overflow: auto;
+	background-color: #E0E0E0;
+	font-family: "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+}
