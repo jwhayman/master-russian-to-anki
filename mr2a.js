@@ -7,12 +7,19 @@ var mr2a = {
 		this.data = $('.topwords').first().find('tr.rowFirst, tr.rowSecond');
 		this.cellCount = this.data.first().children('td').length;
 		this.initWriters();
+		this.initSelectors();
 		this.processData();
 	},
 	
 	initWriters: function() {
 		$('.topwords').first().before('<pre id="mr2a-audio" class="mr2a-container"></pre>');
 		$('.topwords').first().before('<pre id="mr2a-csv" class="mr2a-container"></pre>');
+	},
+	
+	initSelectors: function() {
+		$('.mr2a-container').click(function(e) {
+			selectElementText(document.getElementById(e.currentTarget.id));
+		});
 	},
 	
 	processData: function() {
@@ -29,7 +36,7 @@ var mr2a = {
 			}
 			else if (mr2a.cellCount == 4) {
 				var word = {
-					'russian': mr2a.processCell(cells[1]).toUpperCase(),
+					'russian': mr2a.processCell(cells[1]),
 					'translation': mr2a.processCell(cells[2]),
 					'speech': mr2a.processCell(cells[3])
 				}
@@ -49,7 +56,7 @@ var mr2a = {
 	},
 	
 	processCell: function(cell) {
-		return $(cell).text().trim().replace(",", ";");
+		return $(cell).text().trim();
 	},
 	
 	writeAudioFiles: function() {
@@ -69,23 +76,16 @@ var mr2a = {
 			for (var i = 0; i < this.processedData.length; i++) {
 				var word = this.processedData[i];
 				var audioFile = word.audio.match(/[^/]*$/);
-				$('#mr2a-csv').append(word.russian + "," + word.translation + "," + word.speech + "," + audioFile + "\r\n");
+				$('#mr2a-csv').append(word.russian + "\t" + word.translation + "\t" + word.speech + "\t" + audioFile + "\r\n");
 			}
 		}
 		else if (mr2a.cellCount == 4) {
 			for (var i = 0; i < this.processedData.length; i++) {
 				var word = this.processedData[i];
-				$('#mr2a-csv').append(word.russian + "," + word.translation + "," + word.speech + "\r\n");
+				$('#mr2a-csv').append(word.russian + "\t" + word.translation + "\t" + word.speech + "\r\n");
 			}
 		}
 	}
-}
-
-var word = {
-	audio: '',
-	russian: '',
-	translation: '',
-	speech: ''
 }
 
 $(document).ready(function() {
@@ -93,3 +93,19 @@ $(document).ready(function() {
 	mr2a.writeAudioFiles();
 	mr2a.writeToCSV();
 });
+
+function selectElementText(el, win) {
+    win = win || window;
+    var doc = win.document, sel, range;
+    if (win.getSelection && doc.createRange) {
+        sel = win.getSelection();
+        range = doc.createRange();
+        range.selectNodeContents(el);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (doc.body.createTextRange) {
+        range = doc.body.createTextRange();
+        range.moveToElementText(el);
+        range.select();
+    }
+}
